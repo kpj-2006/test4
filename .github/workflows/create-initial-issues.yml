@@ -9,7 +9,7 @@ jobs:
     concurrency:
       group: create-initial-issues-${{ github.ref }}
       cancel-in-progress: false
-    if: ${{ github.repository != 'automation-workflows/test4' && github.repository_owner == 'automation-workflows' }}
+    if: ${{ github.repository != 'automation-workflows/test4' }}
     permissions:
       contents: write
       issues: write
