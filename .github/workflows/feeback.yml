@@ -1,0 +1,25 @@
+name: Save PR Feedback
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_target:
+    types: [closed]
+
+jobs:
+  save-feedback:
+    if: ${{ github.event_name == 'issue_comment' && github.event.issue.pull_request }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+    steps:
+      - name: Run action
+        uses: automation-workflows/pr-feedback-action@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          google-sheets-id: ${{ vars.FEEDBACK_SHEET_ID }}
+          google-service-account-key: ${{ secrets.GOOGLE_SA_KEY }}
+          trigger-keyword: '@suggestion'
